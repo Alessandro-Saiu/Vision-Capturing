@@ -6,6 +6,11 @@ from video_processing import VideoReader
 VIDEO_PATH = r"C:/Users/aless/Documents/Training/test_256.mp4"
 
 if __name__ == '__main__':
+    
+    #video = VideoHandler(PATH)
+    #video(model = model, feature = feature)
+    #predicted_class_idx = video << "nome_file"
+    
     reader = VideoReader(VIDEO_PATH)
     video = reader.open_video()
 
@@ -16,8 +21,7 @@ if __name__ == '__main__':
         inputs = feature_extractor(clip, return_tensors="pt")
 
         with torch.no_grad():
-            outputs = model(**inputs)
-            logits = outputs.logits
+            logits = model(**inputs).logits
 
         predicted_class_idx = logits.argmax(-1).item()
         print("Predicted class:", model.config.id2label[predicted_class_idx])
